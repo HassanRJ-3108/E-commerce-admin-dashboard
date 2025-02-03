@@ -11,7 +11,7 @@ export function useAuth() {
   const login = async (email: string, password: string) => {
     setIsLoading(true)
     try {
-      const response = await fetch("/api/auth/login", {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/auth/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -40,7 +40,7 @@ export function useAuth() {
   const logout = async () => {
     setIsLoading(true)
     try {
-      await fetch("/api/auth/logout", { method: "POST" })
+      await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/auth/logout`, { method: "POST" })
       setUser(null)
       router.push("/login")
     } catch (error) {

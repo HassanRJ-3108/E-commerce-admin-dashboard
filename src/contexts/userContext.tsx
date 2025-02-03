@@ -18,7 +18,7 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({ children
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const response = await fetch("/api/auth/me")
+        const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/auth/me`)
         if (response.ok) {
           const data = await response.json()
           setUser(data.user)
