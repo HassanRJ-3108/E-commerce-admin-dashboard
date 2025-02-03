@@ -3,7 +3,6 @@ import type React from "react"
 import { createContext, useContext, useState, useEffect } from "react"
 import type { User } from "@/types/User"
 
-
 type UserContextType = {
   user: User | null
   setUser: React.Dispatch<React.SetStateAction<User | null>>
