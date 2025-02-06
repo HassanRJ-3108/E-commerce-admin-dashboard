@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import { Toaster } from "react-hot-toast"
-import { UserProvider } from "@/contexts/userContext"
-import type React from "react" // Added import for React
-import { AuthProvider } from '@/components/AuthProvider';
+import { Toaster as ReactHotToaster } from "react-hot-toast";
+import { UserProvider } from "@/contexts/userContext";
+import type React from "react"; 
+import { AuthProvider } from "@/components/AuthProvider";
+import { Toaster as UiToaster } from "@/components/ui/toaster";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -34,7 +35,8 @@ export default function RootLayout({
         <UserProvider>
           <AuthProvider>
             {children}
-            <Toaster position="top-right" />
+            <ReactHotToaster position="top-right" />
+            <UiToaster />
           </AuthProvider>
         </UserProvider>
       </body>

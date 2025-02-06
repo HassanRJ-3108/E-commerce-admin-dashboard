@@ -4,7 +4,7 @@ import { useState } from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import type { IconType } from "react-icons"
-import { FiHome, FiBox, FiShoppingCart, FiUsers, FiSettings } from "react-icons/fi"
+import { FiHome, FiBox, FiShoppingCart, FiUsers, FiSettings, FiTag } from "react-icons/fi"  // FiTag import kar liya
 
 interface NavItem {
   name: string
@@ -16,7 +16,8 @@ const navItems: NavItem[] = [
   { name: "Dashboard", href: "/dashboard", icon: FiHome },
   { name: "Products", href: "/dashboard/products", icon: FiBox },
   { name: "Orders", href: "/dashboard/orders", icon: FiShoppingCart },
-  { name: "Users", href: "/dashboard/users", icon: FiUsers },
+  { name: "Users", href: "/dashboard/customers", icon: FiUsers },
+  { name: "Promo Codes", href: "/dashboard/promo-codes", icon: FiTag }, // Naya nav item add kiya
   { name: "Settings", href: "/dashboard/settings", icon: FiSettings },
 ]
 
@@ -57,4 +58,3 @@ export default function Sidebar() {
     </div>
   )
 }
-

@@ -1,44 +1,58 @@
-'use client'
+"use client"
 
-import { ReactNode, useEffect } from 'react'
-import { useRouter } from 'next/navigation'
-import { motion } from 'framer-motion'
-import Sidebar from './Sidebar'
-import Header from './Header'
-import { useUser } from '@/contexts/userContext'
+import { type ReactNode, useEffect } from "react"
+import { useRouter } from "next/navigation"
+import { motion, AnimatePresence } from "framer-motion"
+import Sidebar from "./Sidebar"
+import Header from "./Header"
+import { useUser } from "@/contexts/userContext"
+import { Loader2 } from "lucide-react"
 
 interface DashboardShellProps {
   children: ReactNode
 }
 
 export default function DashboardShell({ children }: DashboardShellProps) {
-  const { user } = useUser()
+  const { user, loading } = useUser()
   const router = useRouter()
 
   useEffect(() => {
-    if (user === null) {
-      router.push('/login')
+    if (!loading && user === null) {
+      router.push("/login")
     }
-  }, [user, router])
+  }, [user, loading, router])
+
+  if (loading) {
+    return (
+      <div className="flex h-screen items-center justify-center">
+        <Loader2 className="h-8 w-8 animate-spin text-primary" />
+      </div>
+    )
+  }
 
   if (user === null) {
-    return null // or a loading spinner
+    return null
   }
 
   return (
-    <div className="flex h-screen bg-gray-100">
+    <div className="flex h-screen overflow-hidden bg-background">
       <Sidebar />
-      <div className="flex-1 flex flex-col overflow-hidden">
+      <div className="flex flex-1 flex-col overflow-hidden">
         <Header />
-        <motion.main
-          className="flex-1 overflow-x-hidden overflow-y-auto bg-gray-200"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.5 }}
-        >
-          <div className="container mx-auto px-6 py-8">{children}</div>
-        </motion.main>
+        <AnimatePresence mode="wait">
+          <motion.main
+            key={router.pathname}
+            className="flex-1 overflow-y-auto bg-background p-8"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.2 }}
+          >
+            {children}
+          </motion.main>
+        </AnimatePresence>
       </div>
     </div>
   )
 }
+
